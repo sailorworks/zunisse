@@ -1,21 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-black text-pearl font-body;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+}
+
+/* Luxury Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2 bg-black-soft;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gold rounded-full;
+}
+
+/* Luxury Selection */
+::selection {
+  @apply bg-gold text-black;
 }
