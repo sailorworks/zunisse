@@ -1,6 +1,6 @@
 "use client";
-
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -20,7 +20,6 @@ export default function WaitlistForm() {
     setStatus("loading");
 
     try {
-      // Check if the email already exists in the database
       const { data: existingEmail } = await supabase
         .from("waitlist")
         .select("email")
@@ -33,7 +32,6 @@ export default function WaitlistForm() {
         return;
       }
 
-      // Insert the new email into the database
       const { error } = await supabase.from("waitlist").insert([
         {
           email: email,
@@ -41,10 +39,7 @@ export default function WaitlistForm() {
         },
       ]);
 
-      if (error) {
-        console.error("Supabase error:", error);
-        throw error;
-      }
+      if (error) throw error;
 
       setStatus("success");
       setMessage("Thank you for joining our waitlist!");
@@ -57,11 +52,17 @@ export default function WaitlistForm() {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.8 }}
+      className="w-full max-w-lg mx-auto"
+    >
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Input and Submit */}
         <div className="flex flex-col sm:flex-row gap-4">
-          <input
+          <motion.input
+            whileFocus={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -69,26 +70,32 @@ export default function WaitlistForm() {
             className="flex-1 px-6 py-3 bg-dark border border-cream/20 rounded-full text-light placeholder-cream/50 focus:outline-none focus:ring-2 focus:ring-gold-500"
             required
           />
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={status === "loading"}
             className="px-8 py-3 bg-gradient-to-r from-gold-500 to-gold-400 text-dark font-bold uppercase tracking-wide rounded-full shadow-gold-glow hover:opacity-90 disabled:opacity-50 transition"
           >
             {status === "loading" ? "Joining..." : "Join Waitlist"}
-          </button>
+          </motion.button>
         </div>
       </form>
 
-      {/* Feedback Message */}
-      {message && (
-        <p
-          className={`mt-4 text-center text-sm ${
-            status === "error" ? "text-roseGold" : "text-gold-500"
-          }`}
-        >
-          {message}
-        </p>
-      )}
-    </div>
+      <AnimatePresence mode="wait">
+        {message && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={`mt-4 text-center text-sm ${
+              status === "error" ? "text-roseGold" : "text-gold-500"
+            }`}
+          >
+            {message}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
