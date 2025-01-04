@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import WaitlistForm from "./components/waitlist";
 
 export default function Home() {
@@ -8,23 +9,25 @@ export default function Home() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  };
-
-  const staggerChildren = {
-    visible: {
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const lineReveal = {
-    hidden: { scaleX: 0 },
-    visible: {
-      scaleX: 1,
       transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
+  const slideIn = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
+  const imageReveal = {
+    hidden: { opacity: 0, scale: 1.1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 1.2, ease: "easeOut" },
     },
   };
 
@@ -32,116 +35,110 @@ export default function Home() {
     <motion.main
       initial="hidden"
       animate="visible"
-      variants={staggerChildren}
-      className="relative min-h-screen bg-black flex flex-col"
+      className="h-screen bg-black overflow-hidden relative"
     >
-      {/* Luxury Overlay Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.2 }}
-          transition={{ duration: 1.5 }}
-          className="absolute top-0 left-0 w-full h-full bg-luxury-gradient"
-        />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.1 }}
-          transition={{ duration: 1.5, delay: 0.5 }}
-          className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-emerald/10 rounded-full blur-[100px]"
-        />
+      {/* Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-radial from-gold/5 via-transparent to-transparent" />
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gold/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-pearl-light/5 blur-[100px] rounded-full" />
       </div>
 
-      {/* Content Container */}
-      <div className="relative z-10 flex-grow container mx-auto px-6 lg:px-12 py-16 flex flex-col justify-center">
-        {/* Brand Section */}
-        <motion.div variants={fadeIn} className="text-center mb-16">
-          <motion.p
-            variants={fadeIn}
-            className="text-gold/70 font-body uppercase tracking-[0.3em] text-sm mb-4"
-          >
-            Luxury Waist Chains
-          </motion.p>
-          <motion.h1
-            variants={fadeIn}
-            className="text-6xl md:text-8xl font-heading font-bold text-pearl-light"
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gold via-pearl-light to-gold">
-              ZUNISSE
-            </span>
-          </motion.h1>
-        </motion.div>
+      {/* Main Content Grid */}
+      <div className="h-full grid lg:grid-cols-2 container mx-auto px-6 lg:px-12 py-8 relative z-10">
+        {/* Left Column - Content */}
+        <div className="flex flex-col justify-between h-full pr-0 lg:pr-12">
+          {/* Top Content Section */}
+          <div className="space-y-6">
+            {/* Brand Section */}
+            <motion.div variants={slideIn} className="space-y-2">
+              <motion.p
+                variants={fadeIn}
+                className="text-gold/80 font-body uppercase tracking-[0.4em] text-sm"
+              >
+                Luxury Waist Chains
+              </motion.p>
+              <motion.h1
+                variants={fadeIn}
+                className="text-6xl lg:text-7xl xl:text-8xl font-heading font-bold leading-none"
+              >
+                <span className="text-gold">ZUNISSE</span>
+              </motion.h1>
+            </motion.div>
 
-        {/* Hero Content */}
+            {/* Description Section */}
+            <div className="space-y-4">
+              <motion.p
+                variants={fadeIn}
+                className="text-xl font-light text-pearl-light/90 leading-relaxed max-w-lg"
+              >
+                Elevate your elegance with artisanal waist chains, meticulously
+                crafted for the modern goddess. Each piece is a celebration of
+                feminine beauty and timeless sophistication.
+              </motion.p>
+
+              <motion.div
+                variants={fadeIn}
+                className="flex items-center space-x-4"
+              >
+                <div className="h-[1px] w-12 bg-gold/30" />
+                <span className="text-sm uppercase tracking-widest text-gold">
+                  Est. 2024
+                </span>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Bottom Content Section */}
+          <div className="space-y-6">
+            {/* Opening Soon Section */}
+            <motion.div variants={fadeIn} className="space-y-3">
+              <h2 className="text-gold text-xl uppercase tracking-widest font-body">
+                Opening Soon
+              </h2>
+              <p className="text-pearl-light/70 text-lg max-w-md">
+                Join our exclusive waitlist to be the first to experience our
+                luxurious collection.
+              </p>
+            </motion.div>
+
+            {/* Waitlist Form */}
+            <WaitlistForm />
+          </div>
+        </div>
+
+        {/* Right Column - Image */}
         <motion.div
-          variants={fadeIn}
-          className="max-w-3xl mx-auto text-center space-y-8 mb-16"
+          variants={imageReveal}
+          className="relative h-full hidden lg:block"
         >
-          <motion.p
-            variants={fadeIn}
-            className="text-xl md:text-2xl font-body font-light text-pearl-light/90 leading-relaxed"
-          >
-            Elevate your elegance with artisanal waist chains, meticulously
-            crafted for the modern goddess.
-          </motion.p>
-
-          <div className="flex items-center justify-center space-x-4">
-            <motion.div
-              variants={lineReveal}
-              className="w-16 h-[1px] bg-gold/30"
+          <div className="absolute inset-0 rounded-2xl overflow-hidden border border-gold/20">
+            <Image
+              src="/waistchain-hero.png"
+              alt="Luxury waist chain elegantly worn"
+              fill
+              className="object-cover object-center"
+              priority
+              quality={95}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            <motion.span
-              variants={fadeIn}
-              className="text-sm uppercase tracking-widest text-gold/80"
-            >
-              Est. 2024
-            </motion.span>
-            <motion.div
-              variants={lineReveal}
-              className="w-16 h-[1px] bg-gold/30"
-            />
+            {/* Corner Decorative Element */}
+            <div className="absolute top-4 right-4 w-8 h-8 border-t border-r border-gold/40" />
           </div>
         </motion.div>
-
-        {/* Waitlist Section */}
-        <motion.div variants={fadeIn} className="max-w-2xl mx-auto w-full">
-          <motion.div variants={fadeIn} className="text-center mb-8">
-            <motion.h2
-              variants={fadeIn}
-              className="text-xl uppercase tracking-widest text-gold mb-4 font-body"
-            >
-              Opening Soon
-            </motion.h2>
-            <motion.p
-              variants={fadeIn}
-              className="text-pearl-light/70 max-w-md mx-auto mb-8"
-            >
-              Join our exclusive waitlist to be the first to experience our
-              luxurious collection of waist chains.
-            </motion.p>
-          </motion.div>
-          <WaitlistForm />
-        </motion.div>
       </div>
 
-      {/* Decorative Footer */}
-      <motion.footer variants={fadeIn} className="relative z-10 pb-8">
-        <div className="container mx-auto flex justify-center items-center space-x-4 text-gold/50">
-          <motion.div
-            variants={lineReveal}
-            className="w-24 h-[1px] bg-gold/20"
-          />
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="w-2 h-2 rounded-full bg-gold/20"
-          />
-          <motion.div
-            variants={lineReveal}
-            className="w-24 h-[1px] bg-gold/20"
-          />
-        </div>
-      </motion.footer>
+      {/* Decorative footer element */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 1 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center space-x-3"
+      >
+        <div className="w-1 h-1 rounded-full bg-gold/30" />
+        <div className="w-1 h-1 rounded-full bg-gold/30" />
+        <div className="w-1 h-1 rounded-full bg-gold/30" />
+      </motion.div>
     </motion.main>
   );
 }
