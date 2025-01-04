@@ -9,7 +9,7 @@ const JSONLDSchema = () => {
     description:
       "Elevate your elegance with artisanal waist chains, meticulously crafted for the modern goddess. Each piece is a celebration of feminine beauty and timeless sophistication.",
     url: "https://zunisse.vercel.app",
-    logo: "https://zunisse.com/logo.png",
+    logo: "https://zunisse.com/zunisselogo.svg",
     image: "https://zunisse.com/waistchain-hero.png",
     priceRange: "₹₹₹",
     address: {
