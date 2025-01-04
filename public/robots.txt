@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+Allow: /sitemap.xml
+
+# Prevent crawling of specific paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /account/
+
+# Prevent media indexing
+Disallow: /assets/downloads/
+Disallow: /temp/
+
+# Crawl delay for better server performance
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://zunisse.com/sitemap.xml
