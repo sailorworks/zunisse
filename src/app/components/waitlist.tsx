@@ -40,14 +40,13 @@ export default function WaitlistForm() {
       ]);
 
       if (error) throw error;
-
       setStatus("success");
       setMessage("Thank you for joining our waitlist!");
       setEmail("");
     } catch (error) {
       console.error("Submission error:", error);
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage("Please try again with different email.");
     }
   };
 
@@ -67,7 +66,7 @@ export default function WaitlistForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
-            className="flex-1 px-6 py-3 bg-dark border border-cream/20 rounded-full text-light placeholder-cream/50 focus:outline-none focus:ring-2 focus:ring-gold-500"
+            className="flex-1 px-6 py-3 bg-black border border-gold/20 rounded-full text-pearl-light/90 placeholder-pearl-light/40 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/30"
             required
           />
           <motion.button
@@ -75,13 +74,12 @@ export default function WaitlistForm() {
             whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={status === "loading"}
-            className="px-8 py-3 bg-gradient-to-r from-gold-500 to-gold-400 text-dark font-bold uppercase tracking-wide rounded-full shadow-gold-glow hover:opacity-90 disabled:opacity-50 transition"
+            className="px-8 py-3 bg-gradient-to-r from-gold to-gold/80 text-black font-bold uppercase tracking-wide rounded-full shadow-gold-glow hover:opacity-90 disabled:opacity-50 transition"
           >
             {status === "loading" ? "Joining..." : "Join Waitlist"}
           </motion.button>
         </div>
       </form>
-
       <AnimatePresence mode="wait">
         {message && (
           <motion.p
@@ -89,7 +87,7 @@ export default function WaitlistForm() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className={`mt-4 text-center text-sm ${
-              status === "error" ? "text-roseGold" : "text-gold-500"
+              status === "error" ? "text-gold/80" : "text-gold"
             }`}
           >
             {message}
